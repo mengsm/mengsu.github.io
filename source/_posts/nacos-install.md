@@ -45,3 +45,7 @@ docker ps
 
 http://127.0.0.1:8848/  ，默认账密都是：nacos
 
+### 系统截图
+
+![image-20210726171801366](/Users/fengjian/Library/Application Support/typora-user-images/image-20210726171801366.png)
+
