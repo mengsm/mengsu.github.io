@@ -5,5 +5,9 @@ tags: Nacos
 ---
 ## 快速开始
 
-### 安装
+### Docker安装
+
+```
+docker pull nacos/nacos-server
+```
 
