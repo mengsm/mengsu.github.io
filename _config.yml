@@ -108,12 +108,12 @@ deploy:
     branch: master
     name: fengjian
     email: 18813000271@163.com
-  - type: git
-    repo: https://github.com/mengsm/mengsu.github.io.git
-    branch: source
-    name: fengjian
-    email: 18813000271@163.com
-    extend_dirs: /
-    ignore_hidden: false
-    ignore_pattern:
-      public: .
+#  - type: git
+#    repo: https://github.com/mengsm/mengsu.github.io.git
+#    branch: source
+#    name: fengjian
+#    email: 18813000271@163.com
+#    extend_dirs: /
+#    ignore_hidden: false
+#    ignore_pattern:
+#      public: .
