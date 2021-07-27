@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Nacos数据模型</title>
+    <link href="/2021/07/27/nacos-data-model/"/>
+    <url>/2021/07/27/nacos-data-model/</url>
+    
+    <content type="html"><![CDATA[<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>Nacos 数据模型 Key 由三元组唯一确认。如下图所示：</p><p><img src="/images/nacos/nacos-data-model.jpeg" alt="点击"></p><ul><li>作为注册中心时，Namespace + Group + Service</li><li>作为配置中心时，Namespace + Group + DataId</li></ul><h2 id="Namespace-命名空间"><a href="#Namespace-命名空间" class="headerlink" title="Namespace 命名空间"></a>Namespace 命名空间</h2><p>用于进行租户粒度的配置隔离。默认为 public（公共命名空间）。</p><p>不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。</p><h2 id="Group-服务分组"><a href="#Group-服务分组" class="headerlink" title="Group 服务分组"></a>Group 服务分组</h2><p>不同的服务可以归类到同一分组。默认为 DEFAULT_GROUP（默认分组）。</p><h2 id="Service-服务"><a href="#Service-服务" class="headerlink" title="Service 服务"></a>Service 服务</h2><p>例如说，用户服务、订单服务、商品服务等等。</p><h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><ul><li><a href="https://nacos.io/zh-cn/docs/what-is-nacos.html">《Nacos 官方文档 —— 概念》</a></li><li><a href="https://nacos.io/zh-cn/docs/architecture.html">《Nacos 官方文档 —— 架构》</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Nacos</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Nacos注册中心</title>
     <link href="/2021/07/27/nacos-discovery/"/>
     <url>/2021/07/27/nacos-discovery/</url>

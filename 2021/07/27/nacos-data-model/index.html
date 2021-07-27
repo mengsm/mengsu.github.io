@@ -18,9 +18,25 @@
   <meta name="author" content="Cute hematoxylin">
   <meta name="keywords" content="">
   
-  <title>Cute hematoxylin</title>
+  <title>Nacos数据模型 - Cute hematoxylin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 100vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -147,17 +163,50 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Constant dropping wears the stone.">
+            <span class="h2" id="subtitle" title="Nacos数据模型">
               
             </span>
 
             
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-27 11:24" pubdate>
+        July 27, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      203 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      2
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
           </div>
 
-          
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
           
         </div>
       </div>
@@ -166,246 +215,95 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/27/nacos-data-model/" target="_self">
-          Nacos数据模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/27/nacos-data-model/" target="_self">
-          
-          
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Nacos数据模型</h1>
             
-          
-          数据模型Nacos 数据模型 Key 由三元组唯一确认。如下图所示：
+            <div class="markdown-body">
+              <h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>Nacos 数据模型 Key 由三元组唯一确认。如下图所示：</p>
+<p><img src="/images/nacos/nacos-data-model.jpeg" srcset="/img/loading.gif" lazyload alt="点击"></p>
+<ul>
+<li>作为注册中心时，Namespace + Group + Service</li>
+<li>作为配置中心时，Namespace + Group + DataId</li>
+</ul>
+<h2 id="Namespace-命名空间"><a href="#Namespace-命名空间" class="headerlink" title="Namespace 命名空间"></a>Namespace 命名空间</h2><p>用于进行租户粒度的配置隔离。默认为 public（公共命名空间）。</p>
+<p>不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。</p>
+<h2 id="Group-服务分组"><a href="#Group-服务分组" class="headerlink" title="Group 服务分组"></a>Group 服务分组</h2><p>不同的服务可以归类到同一分组。默认为 DEFAULT_GROUP（默认分组）。</p>
+<h2 id="Service-服务"><a href="#Service-服务" class="headerlink" title="Service 服务"></a>Service 服务</h2><p>例如说，用户服务、订单服务、商品服务等等。</p>
+<h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/what-is-nacos.html">《Nacos 官方文档 —— 概念》</a></li>
+<li><a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/architecture.html">《Nacos 官方文档 —— 架构》</a></li>
+</ul>
 
-
-作为注册中心时，Namespace + Group + Service
-作为配置中心时，Namespace + Group + DataId
-
-Namespace 命名空间用于进行租户粒度的配置隔离。默认为 public（公共命名空间）。
-不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namesp
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-27 11:24" pubdate>
-              2021-07-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nacos/">Nacos</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/27/nacos-discovery/" target="_self">
-          Nacos注册中心
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/27/nacos-discovery/" target="_self">
-          
-          
-            
-          
-          服务发现和服务健康监测Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 原生SDK、OpenAPI、或一个独立的Agent TODO注册 Service 后，服务消费者可以使用DNS TODO 或HTTP&amp;API查找和发现服务。
-Nacos 提供对服务的实时的健康检查，阻止向不健康的主机或服务实例发送请求。Nacos 支持传输层 (PING 或 TCP)和应用层 (
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-27 10:18" pubdate>
-              2021-07-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nacos/">Nacos</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/26/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE/" target="_self">
-          Typora快捷键
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/26/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE/" target="_self">
-          
-          
-            
-          
-          Typora快捷键最大标题：command + 1 或者：# 大标题：command + 2 或者：## 标准标题：command + 3 或者：### 中标题：command + 4 或者：#### 小标题：command + 5 或者：##### 插入表格：command + T 插入代码：command + alt +c 插入图片：cmd + ctrl + i 行间公式 command + 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-26 13:49" pubdate>
-              2021-07-26
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Typora/">Typora</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/26/nacos-install/" target="_self">
-          Nacos安装运行
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/26/nacos-install/" target="_self">
-          
-          
-            
-          
-          快速开始Docker下载安装1docker pull nacos/nacos-server
-
-Docker查看镜像1docker images
-
-Docker运行1234567891011docker run -d \-e MODE=standalone \-e SPRING_DATASOURCE_PLATFORM=mysql \-e MYSQL_SERVICE_HOST=docker.for.m
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-26 13:30" pubdate>
-              2021-07-26
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nacos/">Nacos</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/07/23/hello-world/" target="_self">
-          Hexo
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/07/23/hello-world/" target="_self">
-          
-          
-            
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-23 18:32" pubdate>
-              2021-07-23
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Nacos/">Nacos</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/27/nacos-discovery/">
+                        <span class="hidden-mobile">Nacos注册中心</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -509,9 +407,15 @@ Quick
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 
