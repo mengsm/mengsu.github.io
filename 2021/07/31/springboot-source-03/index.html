@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Meng Su">
+  <meta name="keywords" content="">
+  
+  <title>springboot源码分析(03) - SpringApplication - Meng Su</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mengsu.site","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Meng Su</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="springboot源码分析(03) - SpringApplication">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-31 16:36" pubdate>
+        July 31, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">springboot源码分析(03) - SpringApplication</h1>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>上节自己搭建的 <code>web</code> 例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Author</span>: mengsu</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Date</span>: 2021/7/30</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Description</span>:</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@SpringBootApplication</span> <span class="hljs-comment">// &lt;1&gt;</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyTestMVCApplication</span> </span>&#123;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>		SpringApplication.run(MyTestMVCApplication.class, args);  <span class="hljs-comment">// &lt;2&gt;</span><br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;1&gt;</code> 处，使用 <code>@SpringBootApplication</code> 注解，标明是 Spring Boot 应用。通过它，可以开启自动配置的功能。</li>
+<li><code>&lt;2&gt;</code> 处，调用 <code>SpringApplication#run(Class&lt;?&gt;... primarySources)</code> 方法，启动 Spring Boot 应用。</li>
+</ul>
+<p>上述的代码，是我们使用 Spring Boot 时，最最最常用的代码。而本文，我们先来分析 Spring Boot 应用的<strong>启动过程</strong>。</p>
+<h3 id="SpringApplication类注释"><a href="#SpringApplication类注释" class="headerlink" title="SpringApplication类注释"></a>SpringApplication类注释</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Class that can be used to bootstrap and launch a Spring application from a Java main</span><br><span class="hljs-comment"> * method. By default class will perform the following steps to bootstrap your</span><br><span class="hljs-comment"> * application:</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * &lt;ul&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;Create an appropriate &#123;<span class="hljs-doctag">@link</span> ApplicationContext&#125; instance (depending on your</span><br><span class="hljs-comment"> * classpath)&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;Register a &#123;<span class="hljs-doctag">@link</span> CommandLinePropertySource&#125; to expose command line arguments as</span><br><span class="hljs-comment"> * Spring properties&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;Refresh the application context, loading all singleton beans&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;Trigger any &#123;<span class="hljs-doctag">@link</span> CommandLineRunner&#125; beans&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;/ul&gt;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * In most circumstances the static &#123;<span class="hljs-doctag">@link</span> #run(Class, String[])&#125; method can be called</span><br><span class="hljs-comment"> * directly from your &#123;<span class="hljs-doctag">@literal</span> main&#125; method to bootstrap your application:</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * &lt;pre class=&quot;code&quot;&gt;</span><br><span class="hljs-comment"> * &amp;#064;Configuration</span><br><span class="hljs-comment"> * &amp;#064;EnableAutoConfiguration</span><br><span class="hljs-comment"> * public class MyApplication  &#123;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *   // ... Bean definitions</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *   public static void main(String[] args) &#123;</span><br><span class="hljs-comment"> *     SpringApplication.run(MyApplication.class, args);</span><br><span class="hljs-comment"> *   &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> * &lt;/pre&gt;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * For more advanced configuration a &#123;<span class="hljs-doctag">@link</span> SpringApplication&#125; instance can be created and</span><br><span class="hljs-comment"> * customized before being run:</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * &lt;pre class=&quot;code&quot;&gt;</span><br><span class="hljs-comment"> * public static void main(String[] args) &#123;</span><br><span class="hljs-comment"> *   SpringApplication application = new SpringApplication(MyApplication.class);</span><br><span class="hljs-comment"> *   // ... customize application settings here</span><br><span class="hljs-comment"> *   application.run(args)</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> * &lt;/pre&gt;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link</span> SpringApplication&#125;s can read beans from a variety of different sources. It is</span><br><span class="hljs-comment"> * generally recommended that a single &#123;<span class="hljs-doctag">@code</span> <span class="hljs-doctag">@Configuration</span>&#125; class is used to bootstrap</span><br><span class="hljs-comment"> * your application, however, you may also set &#123;<span class="hljs-doctag">@link</span> #getSources() sources&#125; from:</span><br><span class="hljs-comment"> * &lt;ul&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;The fully qualified class name to be loaded by</span><br><span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link</span> AnnotatedBeanDefinitionReader&#125;&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;The location of an XML resource to be loaded by &#123;<span class="hljs-doctag">@link</span> XmlBeanDefinitionReader&#125;, or</span><br><span class="hljs-comment"> * a groovy script to be loaded by &#123;<span class="hljs-doctag">@link</span> GroovyBeanDefinitionReader&#125;&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;li&gt;The name of a package to be scanned by &#123;<span class="hljs-doctag">@link</span> ClassPathBeanDefinitionScanner&#125;&lt;/li&gt;</span><br><span class="hljs-comment"> * &lt;/ul&gt;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * Configuration properties are also bound to the &#123;<span class="hljs-doctag">@link</span> SpringApplication&#125;. This makes it</span><br><span class="hljs-comment"> * possible to set &#123;<span class="hljs-doctag">@link</span> SpringApplication&#125; properties dynamically, like additional</span><br><span class="hljs-comment"> * sources (&quot;spring.main.sources&quot; - a CSV list) the flag to indicate a web environment</span><br><span class="hljs-comment"> * (&quot;spring.main.web-application-type=none&quot;) or the flag to switch off the banner</span><br><span class="hljs-comment"> * (&quot;spring.main.banner-mode=off&quot;).</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Phillip Webb</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Dave Syer</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Andy Wilkinson</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Christian Dupuis</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Stephane Nicoll</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Jeremy Rickard</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Craig Burke</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Michael Simons</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Madhura Bhave</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Brian Clozel</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Ethan Rubinson</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@since</span> 1.0.0</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@see</span> #run(Class, String[])</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@see</span> #run(Class[], String[])</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@see</span> #SpringApplication(Class...)</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<p><code>SpringApplication</code> 用于从 <code>java main</code> 方法引导和启动 <code>Spring</code> 应用程序，默认情况下，将执行以下步骤来引导我们的应用程序：</p>
+<ol>
+<li>创建一个恰当的 <code>ApplicationContext</code> 实例（取决于类路径）</li>
+<li>注册 <code>CommandLinePropertySource</code> ，将命令行参数公开为 <code>Spring</code> 属性</li>
+<li>刷新应用程序上下文，加载所有单例 <code>bean</code></li>
+<li>触发全部 <code>CommandLineRunner bean</code></li>
+</ol>
+<p>大多数情况下，像 <code>SpringApplication.run(MyTestMVCApplication, args)</code> ; 这样启动我们的应用，也可以在运行之前创建和自定义 <code>SpringApplication</code> 实例，具体可以参考注释中示例。<code>SpringApplication</code> 可以从各种不同的源读取bean。 通常建议使用单个 <code>@Configuration</code> 类来引导，但是我们也可以通过以下方式来设置资源：</p>
+<ol>
+<li>通过 <code>AnnotatedBeanDefinitionReader</code> 加载完全限定类名</li>
+<li>通过 <code>XmlBeanDefinitionReader</code> 加载 XML 资源位置，或者是通过 <code>GroovyBeanDefinitionReader</code> 加载 <code>groovy</code> 脚本位置</li>
+<li>通过 <code>ClassPathBeanDefinitionScanner</code> 扫描包名称</li>
+</ol>
+<p>也就是说 <code>SpringApplication</code> 还是做了不少事的，具体实现后续会慢慢讲来，今天的主角只是 <code>SpringApplication</code> 构造方法。</p>
+<h1 id="SpringApplication构造方法"><a href="#SpringApplication构造方法" class="headerlink" title="SpringApplication构造方法"></a>SpringApplication构造方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java">	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123; <span class="hljs-comment">// &lt;1&gt;</span><br>	SpringApplication.run(MyTestMVCApplication.class, args);   <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ConfigurableApplicationContext <span class="hljs-title">run</span><span class="hljs-params">(Class&lt;?&gt; primarySource, String... args)</span> </span>&#123; <span class="hljs-comment">// &lt;2&gt;</span><br>	<span class="hljs-keyword">return</span> run(<span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123; primarySource &#125;, args);				<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ConfigurableApplicationContext <span class="hljs-title">run</span><span class="hljs-params">(Class&lt;?&gt;[] primarySources, String[] args)</span> </span>&#123; <span class="hljs-comment">// &lt;3&gt;</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SpringApplication(primarySources).run(args);   <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SpringApplication</span><span class="hljs-params">(Class&lt;?&gt;... primarySources)</span> </span>&#123; <span class="hljs-comment">// &lt;4&gt;</span><br>	<span class="hljs-keyword">this</span>(<span class="hljs-keyword">null</span>, primarySources);		<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Create a new &#123;<span class="hljs-doctag">@link</span> SpringApplication&#125; instance. The application context will load</span><br><span class="hljs-comment"> * beans from the specified primary sources (see &#123;<span class="hljs-doctag">@link</span> SpringApplication class-level&#125;</span><br><span class="hljs-comment"> * documentation for details. The instance can be customized before calling</span><br><span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link</span> #run(String...)&#125;.</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> resourceLoader the resource loader to use</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> primarySources the primary bean sources</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@see</span> #run(Class, String[])</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@see</span> #setSources(Set)</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SpringApplication</span><span class="hljs-params">(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources)</span> </span>&#123; <span class="hljs-comment">// &lt;5&gt;</span><br>	<span class="hljs-keyword">this</span>.resourceLoader = resourceLoader;   <br>	Assert.notNull(primarySources, <span class="hljs-string">&quot;PrimarySources must not be null&quot;</span>);<br>	<span class="hljs-keyword">this</span>.primarySources = <span class="hljs-keyword">new</span> LinkedHashSet&lt;&gt;(Arrays.asList(primarySources)); <br>	<span class="hljs-keyword">this</span>.webApplicationType = WebApplicationType.deduceFromClasspath(); <span class="hljs-comment">// &lt;5.1&gt;</span><br>	setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));  <span class="hljs-comment">// &lt;5.2&gt;</span><br>	setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class)); <span class="hljs-comment">// &lt;5.3&gt;</span><br>	<span class="hljs-keyword">this</span>.mainApplicationClass = deduceMainApplicationClass();  <span class="hljs-comment">// &lt;5.4&gt;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>按照层级跳转分为以上五个层级结构，可以发现咱们自定义的 <code>MyTestMVCApplication main</code> 方法都是调用的 <code>SpringApplication</code> 静态方法，直接到达的构造函数。</p>
+<p>从 <code>SpringApplication</code> 构造函数的注释上来看，就是说创建一个 <code>MyTestMVCApplication </code>实例，应用上下文从特定的资源文件中加载<code>bean</code>。可以在调用<code>run</code>之前自定义实例。</p>
+<h2 id="5-1-WebApplicationType-deduceFromClasspath"><a href="#5-1-WebApplicationType-deduceFromClasspath" class="headerlink" title="5.1 WebApplicationType.deduceFromClasspath()"></a>5.1 WebApplicationType.deduceFromClasspath()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">static</span> WebApplicationType <span class="hljs-title">deduceFromClasspath</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (ClassUtils.isPresent(WEBFLUX_INDICATOR_CLASS, <span class="hljs-keyword">null</span>) &amp;&amp; !ClassUtils.isPresent(WEBMVC_INDICATOR_CLASS, <span class="hljs-keyword">null</span>)<br>			&amp;&amp; !ClassUtils.isPresent(JERSEY_INDICATOR_CLASS, <span class="hljs-keyword">null</span>)) &#123;<br>		<span class="hljs-keyword">return</span> WebApplicationType.REACTIVE;<br>	&#125;<br>	<span class="hljs-keyword">for</span> (String className : SERVLET_INDICATOR_CLASSES) &#123;<br>     <span class="hljs-comment">// 判断给定的类是否能够加载，就是说类路径下是否存在给定的类</span><br>		<span class="hljs-keyword">if</span> (!ClassUtils.isPresent(className, <span class="hljs-keyword">null</span>)) &#123;<br>			<span class="hljs-keyword">return</span> WebApplicationType.NONE;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> WebApplicationType.SERVLET;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果<code>org.springframework.web.reactive.DispatcherHandler</code>能够被加载且<code>org.springframework.web.servlet.DispatcherServlet</code>不能够被加载，那么断定<code>web</code>应用类型是<code>REACTIVE</code>；如果<code>javax.servlet.Servlet</code>和<code>org.springframework.web.context.ConfigurableWebApplicationContext</code>任意一个不能被加载，那么断定<code>web</code>应用类型是<code>NONE</code>；如果不能断定是<code>REACTIVE</code>和<code>NONE</code>，那么就是<code>SERVLET</code>类型；具体这三种类型代表什么含义，可以查看WebApplicationType中的说明。　　</p>
+</blockquote>
+<h2 id="5-2-setInitializers-Collection-getSpringFactoriesInstances-ApplicationContextInitializer-class"><a href="#5-2-setInitializers-Collection-getSpringFactoriesInstances-ApplicationContextInitializer-class" class="headerlink" title="5.2 setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));"></a>5.2 setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));</h2><blockquote>
+<p>从字面意思看就是获取spring工厂实例，至于从哪获取哪些工厂实例，我们往下看。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> &lt;T&gt; <span class="hljs-function">Collection&lt;T&gt; <span class="hljs-title">getSpringFactoriesInstances</span><span class="hljs-params">(Class&lt;T&gt; type)</span> </span>&#123; <span class="hljs-comment">// &lt;1&gt;</span><br>		<span class="hljs-keyword">return</span> getSpringFactoriesInstances(type, <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123;&#125;);<br>&#125;<br><br><span class="hljs-keyword">private</span> &lt;T&gt; <span class="hljs-function">Collection&lt;T&gt; <span class="hljs-title">getSpringFactoriesInstances</span><span class="hljs-params">(Class&lt;T&gt; type, Class&lt;?&gt;[] parameterTypes, Object... args)</span> </span>&#123; <span class="hljs-comment">// &lt;2&gt;</span><br>		ClassLoader classLoader = getClassLoader();<br>		<span class="hljs-comment">// Use names and ensure unique to protect against duplicates</span><br>		Set&lt;String&gt; names = <span class="hljs-keyword">new</span> LinkedHashSet&lt;&gt;(SpringFactoriesLoader.loadFactoryNames(type, classLoader));<br>		List&lt;T&gt; instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);<br>		AnnotationAwareOrderComparator.sort(instances);<br>		<span class="hljs-keyword">return</span> instances;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="SpringFactoriesLoader-loadFactoryNames"><a href="#SpringFactoriesLoader-loadFactoryNames" class="headerlink" title="SpringFactoriesLoader.loadFactoryNames"></a>SpringFactoriesLoader.loadFactoryNames</h3><blockquote>
+<p><strong>SpringFactoriesLoader.loadFactoryNames</strong> 可以先留意下，该处代码会在 <code>run</code> 的时候进行读取，可以看到现在的作用就是为了初始化实例，并且放在缓存当中。</p>
+<ol>
+<li><p>查找类路径下全部的META-INF/spring.factories的URL</p>
+</li>
+<li><p>根据url加载全部的spring.factories中的属性，spring.factories内容如下</p>
+</li>
+<li><p>将所有spring.factories中的值缓存到SpringFactoriesLoader的cache中：</p>
+<p>private static final Map&lt;ClassLoader, MultiValueMap&lt;String, String&gt;&gt; cache = new ConcurrentReferenceHashMap&lt;&gt;()；方便下次调用。</p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">loadFactoryNames</span><span class="hljs-params">(Class&lt;?&gt; factoryClass, <span class="hljs-meta">@Nullable</span> ClassLoader classLoader)</span> </span>&#123;<br>	String factoryClassName = factoryClass.getName();<br>	<span class="hljs-keyword">return</span> loadSpringFactories(classLoader).getOrDefault(factoryClassName, Collections.emptyList());<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Map&lt;String, List&lt;String&gt;&gt; loadSpringFactories(<span class="hljs-meta">@Nullable</span> ClassLoader classLoader) &#123;<br>	MultiValueMap&lt;String, String&gt; result = cache.get(classLoader);<br>	<span class="hljs-keyword">if</span> (result != <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">return</span> result;<br>	&#125;<br><br>	<span class="hljs-keyword">try</span> &#123;<br>     <span class="hljs-comment">// classLoader.getResources(FACTORIES_RESOURCE_LOCATION)获取类路径下全部的META-INF/spring.factories的URL</span><br>		Enumeration&lt;URL&gt; urls = (classLoader != <span class="hljs-keyword">null</span> ?<br>				classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :<br>				ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));<br>		result = <span class="hljs-keyword">new</span> LinkedMultiValueMap&lt;&gt;();<br>     <span class="hljs-comment">// 遍历全部的URL，逐个读取META-INF/spring.factories中的属性</span><br>		<span class="hljs-keyword">while</span> (urls.hasMoreElements()) &#123;<br>			URL url = urls.nextElement();<br>			UrlResource resource = <span class="hljs-keyword">new</span> UrlResource(url);<br>			Properties properties = PropertiesLoaderUtils.loadProperties(resource);<br>			<span class="hljs-keyword">for</span> (Map.Entry&lt;?, ?&gt; entry : properties.entrySet()) &#123;<br>				String factoryClassName = ((String) entry.getKey()).trim();<br>         <span class="hljs-comment">// 属性全部放入MultiValueMap&lt;String, String&gt; result中，注意result的类型</span><br>				<span class="hljs-keyword">for</span> (String factoryName : StringUtils.commaDelimitedListToStringArray((String) entry.getValue())) &#123;<br>					result.add(factoryClassName, factoryName.trim());<br>				&#125;<br>			&#125;<br>		&#125;<br>     <span class="hljs-comment">// 结果放入缓存，方便下次查找，run方法中会使用缓存</span><br>		cache.put(classLoader, result);<br>		<span class="hljs-keyword">return</span> result;<br>	&#125;<br>	<span class="hljs-keyword">catch</span> (IOException ex) &#123;<br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Unable to load factories from location [&quot;</span> +<br>				FACTORIES_RESOURCE_LOCATION + <span class="hljs-string">&quot;]&quot;</span>, ex);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="createSpringFactoriesInstances"><a href="#createSpringFactoriesInstances" class="headerlink" title="createSpringFactoriesInstances"></a>createSpringFactoriesInstances</h3><blockquote>
+<p>根据上面获取的指定类型的工厂名称列表来实例化工厂bean，我们可以简单的认为通过反射来实例化，但是具体的实现也没那么简单，感兴趣的可以自己去跟。</p>
+</blockquote>
+<h3 id="AnnotationAwareOrderComparator-sort-instances"><a href="#AnnotationAwareOrderComparator-sort-instances" class="headerlink" title="AnnotationAwareOrderComparator.sort(instances)"></a>AnnotationAwareOrderComparator.sort(instances)</h3><blockquote>
+<p>排序规则：@Order从小到大排序，没有order则按没排序之前的顺序。</p>
+</blockquote>
+<h2 id="5-3-getSpringFactoriesInstances-ApplicationListener-class"><a href="#5-3-getSpringFactoriesInstances-ApplicationListener-class" class="headerlink" title="5.3 getSpringFactoriesInstances(ApplicationListener.class))"></a>5.3 getSpringFactoriesInstances(ApplicationListener.class))</h2><blockquote>
+<p>类似 5.2 一样，  只是传入的类型不同 &gt; <code>ApplicationListener</code></p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>构造自身实例</li>
+<li>推测web应用类型，并赋值到属性webApplicationType</li>
+<li> 设置属性 </li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;ApplicationContextInitializer&lt;?&gt;&gt; initializers<br>List&lt;ApplicationListener&lt;?&gt;&gt; listeners<br></code></pre></td></tr></table></figure>
+
+<p>中途读取了类路径下所有META-INF/spring.factories的属性，并缓存到了SpringFactoriesLoader的cache缓存中</p>
+<ol start="4">
+<li>推断主类，并赋值到属性mainApplicationClass</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/SpringBoot/">SpringBoot</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/30/springboot-source-02/">
+                        <span class="hidden-mobile">springboot源码分析(02) - 项目结构详解</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
