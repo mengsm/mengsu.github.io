@@ -104,7 +104,7 @@ theme: fluid
 
 deploy:
   - type: git
-    repo: https://github.com/mengsm/mengsu.github.io.git
+    repo: https://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@github.com/mengsm/mengsu.github.io.git
     branch: master
     name: fengjian
     email: 18813000271@163.com
