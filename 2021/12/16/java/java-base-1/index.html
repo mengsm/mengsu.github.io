@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3k 字
+      3.1k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      33
+      34
        分钟
     </span>
   
@@ -266,8 +266,12 @@
 <p>前面介绍的赋值都是在声明变量的时候就进行了赋值，但这不是必需的，可以先声明变量，随后再 进行赋值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">int</span> b = <span class="hljs-number">2</span>;<br><span class="hljs-comment">//2乘以a的值再加上b的值赋给c</span><br><span class="hljs-keyword">int</span> c = <span class="hljs-number">2</span> * t + b;<br></code></pre></td></tr></table></figure>
 
-
-
+<p>本质</p>
+<blockquote>
+<p>char本质上是一个固定占用两个字节的<strong>无符号正整数</strong>，这个正整数对应于Unicode编号，用于表示那个Unicode编号对应的字符。</p>
+<p>由于固定占用两个字节，char只能表示Unicode编号在<strong>65536</strong>以内的字符，而不能表示超出范围的字符。</p>
+<p>那超出范围的字符怎么表示呢？使用两个char。类String有一些相关的方法，后续文章介绍。</p>
+</blockquote>
 <h2 id="数组类型"><a href="#数组类型" class="headerlink" title="数组类型"></a>数组类型</h2><p>基本类型的数组有3种赋值形式</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">int</span>[] arr = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;;<br><span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;;<br><span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">3</span>];<br>arr[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>; arr[<span class="hljs-number">1</span>]=<span class="hljs-number">2</span>; arr[<span class="hljs-number">2</span>]=<span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
 
@@ -402,6 +406,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/12/20/java/java-base-2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">java基础(02) - 字符编码</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
