@@ -4,7 +4,26 @@
   
   
   <entry>
-    <title>java基础(02) - 函数</title>
+    <title>java基础(04) - 类</title>
+    <link href="/2021/12/20/java/java-base-4/"/>
+    <url>/2021/12/20/java/java-base-4/</url>
+    
+    <content type="html"><![CDATA[<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><p>java中除了八大基本数据类型（其中，四种整形byte/short/int/long，两种浮点类型float/double，一种真假类型boolean，一种字符类型char），还可以自定义类，类可以理解为是<strong>函数的容器</strong>，但是类更多表示的是自定义数据类型。</p><h2 id="类的组成部分"><a href="#类的组成部分" class="headerlink" title="类的组成部分"></a>类的组成部分</h2><ul><li>类型本身具有的属性，通过<strong>类变量</strong>体现  </li><li>类型本身可以进行的操作，通过<strong>类方法</strong>体现</li><li>类型实例具有的属性，通过<strong>实例变量</strong>体现</li><li>类型实例可以进行的操作，通过<strong>实例方法</strong>体现</li></ul><blockquote><p>类变量 or 类方法， 可以理解为 静态 <strong>static</strong> 修饰，可以直接用 <strong>类型.变量(方法)</strong> 进行访问</p><p>实例变量 or 方法，可以理解为 通过 new Class()，然后进行访问</p><p>类变量和实例变量都叫成员变量，也就是类的成员，类变量也叫静态变量或静态成员变量。类方法和实例方法都叫成员方法，也都是类的成员，类方法也叫静态方法。</p></blockquote><h3 id="类成员-static-和-实例成员-new-的访问关系"><a href="#类成员-static-和-实例成员-new-的访问关系" class="headerlink" title="类成员(static) 和 实例成员(new) 的访问关系"></a>类成员(<strong>static</strong>) 和 实例成员(<strong>new</strong>) 的访问关系</h3><blockquote><p>类方法只能访问类变量，但不能访问实例变量，可以调用其他的类方法，但不能调用实例方法。</p><p>实例方法既能访问实例变量，也可以访问类变量，既可以调用实例方法，也可以调用类方法。</p></blockquote><p><strong>声明变量本身只会分配存放位置的内存空间，这块空间还没有指向任何实际内容</strong>。因为这种变量和数组变量本身不存储数据，而只是存储实际内容的位置，它们也都称为<strong>引用类型</strong>的变量。</p><h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><ul><li>public:可以修饰类、类方法、类变量、实例变量、实例方法、构造方法，表示可被外部访问。    </li><li>private:可以修饰类、类方法、类变量、实例变量、实例方法、构造方法，表示不可以被外部访问，只能在类内被使用。</li><li>static: 修饰类变量和类方法，它也可以修饰内部类（后续章节介绍）。        </li><li>this：表示当前实例，可以用于调用其他构造方法，访问实例变量，访问实例方法。       </li><li>final: 修饰类变量、实例变量，表示只能被赋值一次，final也可以修饰实例方法和局部变量（后续章节介绍）。</li></ul><h1 id="类和对象的生命周期"><a href="#类和对象的生命周期" class="headerlink" title="类和对象的生命周期"></a><strong>类和对象的生命周期</strong></h1><h2 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h2><p>在程序运行的时候，当第一次通过new创建一个类的对象的时候，或者直接通过类名访问类变量和类方法的时候，<strong>Java会将类加载进内存，为这个类型分配一块空间，这个空间会包括类的定义，它有哪些变量，哪些方法等，同时还有类的静态变量，并对静态变量赋初始值</strong>。</p><p>类加载进内存后，一般不会释放，直到程序结束。一般情况下，类只会加载一次，所以静态变量在内存中只有一份。</p><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>当通过new创建一个对象的时候，对象产生，在内存中，会存储这个对象的实例变量值，每new一次，对象就会产生一个，就会有一份独立的实例变量。</p><p>每个对象除了保存实例变量的值外，可以理解还保存着对应类型即类的地址，这样，通过对象能知道它的类，访问到类的变量和方法代码。</p><p>实例方法可以理解为一个静态方法，只是多了一个参数this，通过对象调用方法，可以理解为就是调用这个静态方法，并将对象作为参数传给this。</p><h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a><strong>继承</strong></h1><p>计算机程序经常使用类之间的<strong>继承</strong>关系来表示对象之间的分类关系。在继承关系中，有<strong>父类</strong>和<strong>子类</strong>，比如动物类Animal和狗类Dog，Animal是父类，Dog是子类。父类也叫<strong>基类</strong>，子类也叫<strong>派生类</strong>，父类子类是相对的，一个类B可能是类A的子类，是类C的父类。</p><p>使用继承一方面可以复用代码，公共的属性和行为可以放到父类中，而子类只需要关注子类特有的就可以了，另一方面，不同子类的对象可以更为方便的被统一处理。</p><p>继承和多态的基本概念：</p><ul><li>每个类有且只有一个父类，没有声明父类的其父类为Object，子类继承了父类非private的属性和方法，可以增加自己的属性和方法，可以重写父类的方法实现。</li><li>new过程中，父类先进行初始化，可通过super调用父类相应的构造方法，没有使用super的话，调用父类的默认构造方法。</li><li>子类变量和方法与父类重名的情况下，可通过super强制访问父类的变量和方法。</li><li>子类对象可以赋值给父类引用变量，这叫多态，实际执行调用的是子类实现，这叫<strong>动态绑定</strong>。</li></ul><h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a><strong>构造方法</strong></h2><h3 id="super"><a href="#super" class="headerlink" title="super"></a><strong>super</strong></h3><p>如果类只有一个<strong>带参数的构造方法</strong>，没有默认构造方法。这个时候，它的任何子类都必须在构造方法中通过super(…)调用Base的带参数构造方法，否则，Java会提示编译错误。</p><h3 id="构造方法调用重写方法"><a href="#构造方法调用重写方法" class="headerlink" title="构造方法调用重写方法"></a><strong>构造方法调用重写方法</strong></h3><p>如果在父类构造方法中调用了可被重写的方法，则可能会出现意想不到的结果，<strong>在父类构造方法中调用可被子类重写的方法，是一种不好的实践，容易引起混淆，应该只调用private的方法。</strong></p><h2 id="重名与静态绑定"><a href="#重名与静态绑定" class="headerlink" title="重名与静态绑定"></a><strong>重名与静态绑定</strong></h2><p>重名是可以的，重名后实际上有两个变量或方法。对于private变量和方法，它们只能在类内被访问，访问的也永远是当前类的，即在子类中，访问的是子类的，在父类中，访问的父类的，它们只是碰巧名字一样而已，没有任何关系。</p><p>但对于public变量和方法，则要看如何访问它，在类内访问的是当前类的，但子类可以通过super.明确指定访问父类的。在类外，则要看访问变量的静态类型，静态类型是父类，则访问父类的变量和方法，静态类型是子类，则访问的是子类的变量和方法。</p><p>当通过<strong>父类</strong>访问时，访问的是<strong>Base</strong>的变量和方法，当通过<strong>子类</strong>访问时，访问的是Child的变量和方法，这称之为静态绑定，即访问绑定到变量的静态类型，静态绑定在程序编译阶段即可决定，而动态绑定则要等到程序运行时。<strong>实例变量、静态变量、静态方法、private方法，都是静态绑定的</strong>。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java基础(03) - 函数</title>
     <link href="/2021/12/20/java/java-base-3/"/>
     <url>/2021/12/20/java/java-base-3/</url>
     

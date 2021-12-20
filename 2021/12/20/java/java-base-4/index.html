@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Meng Su">
+  <meta name="keywords" content="">
+  
+  <title>java基础(04) - 类 - Meng Su</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"mengsu.site","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Meng Su</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java基础(04) - 类">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-20 21:44" pubdate>
+        December 20, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java基础(04) - 类</h1>
+            
+            <div class="markdown-body">
+              <h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><p>java中除了八大基本数据类型（其中，四种整形byte/short/int/long，两种浮点类型float/double，一种真假类型boolean，一种字符类型char），还可以自定义类，类可以理解为是<strong>函数的容器</strong>，但是类更多表示的是自定义数据类型。</p>
+<h2 id="类的组成部分"><a href="#类的组成部分" class="headerlink" title="类的组成部分"></a>类的组成部分</h2><ul>
+<li>类型本身具有的属性，通过<strong>类变量</strong>体现  </li>
+<li>类型本身可以进行的操作，通过<strong>类方法</strong>体现</li>
+<li>类型实例具有的属性，通过<strong>实例变量</strong>体现</li>
+<li>类型实例可以进行的操作，通过<strong>实例方法</strong>体现</li>
+</ul>
+<blockquote>
+<p>类变量 or 类方法， 可以理解为 静态 <strong>static</strong> 修饰，可以直接用 <strong>类型.变量(方法)</strong> 进行访问</p>
+<p>实例变量 or 方法，可以理解为 通过 new Class()，然后进行访问</p>
+<p>类变量和实例变量都叫成员变量，也就是类的成员，类变量也叫静态变量或静态成员变量。类方法和实例方法都叫成员方法，也都是类的成员，类方法也叫静态方法。</p>
+</blockquote>
+<h3 id="类成员-static-和-实例成员-new-的访问关系"><a href="#类成员-static-和-实例成员-new-的访问关系" class="headerlink" title="类成员(static) 和 实例成员(new) 的访问关系"></a>类成员(<strong>static</strong>) 和 实例成员(<strong>new</strong>) 的访问关系</h3><blockquote>
+<p>类方法只能访问类变量，但不能访问实例变量，可以调用其他的类方法，但不能调用实例方法。</p>
+<p>实例方法既能访问实例变量，也可以访问类变量，既可以调用实例方法，也可以调用类方法。</p>
+</blockquote>
+<p><strong>声明变量本身只会分配存放位置的内存空间，这块空间还没有指向任何实际内容</strong>。因为这种变量和数组变量本身不存储数据，而只是存储实际内容的位置，它们也都称为<strong>引用类型</strong>的变量。</p>
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><ul>
+<li>public:可以修饰类、类方法、类变量、实例变量、实例方法、构造方法，表示可被外部访问。    </li>
+<li>private:可以修饰类、类方法、类变量、实例变量、实例方法、构造方法，表示不可以被外部访问，只能在类内被使用。</li>
+<li>static: 修饰类变量和类方法，它也可以修饰内部类（后续章节介绍）。        </li>
+<li>this：表示当前实例，可以用于调用其他构造方法，访问实例变量，访问实例方法。       </li>
+<li>final: 修饰类变量、实例变量，表示只能被赋值一次，final也可以修饰实例方法和局部变量（后续章节介绍）。</li>
+</ul>
+<h1 id="类和对象的生命周期"><a href="#类和对象的生命周期" class="headerlink" title="类和对象的生命周期"></a><strong>类和对象的生命周期</strong></h1><h2 id="类-1"><a href="#类-1" class="headerlink" title="类"></a>类</h2><p>在程序运行的时候，当第一次通过new创建一个类的对象的时候，或者直接通过类名访问类变量和类方法的时候，<strong>Java会将类加载进内存，为这个类型分配一块空间，这个空间会包括类的定义，它有哪些变量，哪些方法等，同时还有类的静态变量，并对静态变量赋初始值</strong>。</p>
+<p>类加载进内存后，一般不会释放，直到程序结束。一般情况下，类只会加载一次，所以静态变量在内存中只有一份。</p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>当通过new创建一个对象的时候，对象产生，在内存中，会存储这个对象的实例变量值，每new一次，对象就会产生一个，就会有一份独立的实例变量。</p>
+<p>每个对象除了保存实例变量的值外，可以理解还保存着对应类型即类的地址，这样，通过对象能知道它的类，访问到类的变量和方法代码。</p>
+<p>实例方法可以理解为一个静态方法，只是多了一个参数this，通过对象调用方法，可以理解为就是调用这个静态方法，并将对象作为参数传给this。</p>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a><strong>继承</strong></h1><p>计算机程序经常使用类之间的<strong>继承</strong>关系来表示对象之间的分类关系。在继承关系中，有<strong>父类</strong>和<strong>子类</strong>，比如动物类Animal和狗类Dog，Animal是父类，Dog是子类。父类也叫<strong>基类</strong>，子类也叫<strong>派生类</strong>，父类子类是相对的，一个类B可能是类A的子类，是类C的父类。</p>
+<p>使用继承一方面可以复用代码，公共的属性和行为可以放到父类中，而子类只需要关注子类特有的就可以了，另一方面，不同子类的对象可以更为方便的被统一处理。</p>
+<p>继承和多态的基本概念：</p>
+<ul>
+<li>每个类有且只有一个父类，没有声明父类的其父类为Object，子类继承了父类非private的属性和方法，可以增加自己的属性和方法，可以重写父类的方法实现。</li>
+<li>new过程中，父类先进行初始化，可通过super调用父类相应的构造方法，没有使用super的话，调用父类的默认构造方法。</li>
+<li>子类变量和方法与父类重名的情况下，可通过super强制访问父类的变量和方法。</li>
+<li>子类对象可以赋值给父类引用变量，这叫多态，实际执行调用的是子类实现，这叫<strong>动态绑定</strong>。</li>
+</ul>
+<h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a><strong>构造方法</strong></h2><h3 id="super"><a href="#super" class="headerlink" title="super"></a><strong>super</strong></h3><p>如果类只有一个<strong>带参数的构造方法</strong>，没有默认构造方法。这个时候，它的任何子类都必须在构造方法中通过super(…)调用Base的带参数构造方法，否则，Java会提示编译错误。</p>
+<h3 id="构造方法调用重写方法"><a href="#构造方法调用重写方法" class="headerlink" title="构造方法调用重写方法"></a><strong>构造方法调用重写方法</strong></h3><p>如果在父类构造方法中调用了可被重写的方法，则可能会出现意想不到的结果，<strong>在父类构造方法中调用可被子类重写的方法，是一种不好的实践，容易引起混淆，应该只调用private的方法。</strong></p>
+<h2 id="重名与静态绑定"><a href="#重名与静态绑定" class="headerlink" title="重名与静态绑定"></a><strong>重名与静态绑定</strong></h2><p>重名是可以的，重名后实际上有两个变量或方法。对于private变量和方法，它们只能在类内被访问，访问的也永远是当前类的，即在子类中，访问的是子类的，在父类中，访问的父类的，它们只是碰巧名字一样而已，没有任何关系。</p>
+<p>但对于public变量和方法，则要看如何访问它，在类内访问的是当前类的，但子类可以通过super.明确指定访问父类的。在类外，则要看访问变量的静态类型，静态类型是父类，则访问父类的变量和方法，静态类型是子类，则访问的是子类的变量和方法。</p>
+<p>当通过<strong>父类</strong>访问时，访问的是<strong>Base</strong>的变量和方法，当通过<strong>子类</strong>访问时，访问的是Child的变量和方法，这称之为静态绑定，即访问绑定到变量的静态类型，静态绑定在程序编译阶段即可决定，而动态绑定则要等到程序运行时。<strong>实例变量、静态变量、静态方法、private方法，都是静态绑定的</strong>。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/20/java/java-base-3/">
+                        <span class="hidden-mobile">java基础(03) - 函数</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
